@@ -11,8 +11,13 @@ import SwiftData
 @Model
 final class Item {
     var timestamp: Date
+    var promptText: String
+    var promptImages: [Data]
+    var responseText: String?
     
-    init(timestamp: Date) {
+    init(timestamp: Date, promptText: String, promptImages: [Data]) {
         self.timestamp = timestamp
+        self.promptText = promptText
+        self.promptImages = promptImages
     }
 }

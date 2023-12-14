@@ -10,19 +10,27 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @State private var navigationContext = NavigationContext()
+    @State private var isEditorPresented = false
     @Query private var items: [Item]
 
     var body: some View {
         NavigationSplitView {
-            List {
+            List(selection: $navigationContext.selectedItem) {
                 ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                    NavigationLink(value: item) {
+                        HStack {
+                            Text(item.promptText)
+                            Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        }
                     }
                 }
                 .onDelete(perform: deleteItems)
+            }
+            .overlay {
+                if items.isEmpty {
+                    ContentUnavailableView("No prompts", systemImage: "pawprint")
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -34,16 +42,16 @@ struct ContentView: View {
                     }
                 }
             }
+            .sheet(isPresented: $isEditorPresented) {
+                PromptView(item: nil)
+            }
         } detail: {
-            Text("Select an item")
+            PromptView(item: navigationContext.selectedItem)
         }
     }
 
     private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
+        isEditorPresented = true
     }
 
     private func deleteItems(offsets: IndexSet) {
