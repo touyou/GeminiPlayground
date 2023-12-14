@@ -8,99 +8,40 @@
 import SwiftUI
 
 struct PromptView: View {
-    private let gemini = Gemini.shared
     var item: Item?
     
-    @State private var prompt: String = ""
-    @State private var response: String?
-    @State private var trigger: Bool?
-    @State private var isLoading: Bool = false
-    @State private var isPresentingAlert: Bool = false
-    @State private var errorAlertText: String?
-    
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var modelContext
+    @State private var isEditing = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Form {
-                    TextField("Enter Prompt", text: $prompt)
-                    Text(response ?? "No Response")
-                        .foregroundStyle(response?.isEmpty == false ? .primary : .tertiary)
-                }
-                .clipShape(RoundedRectangle(cornerSize: .init(width: 8.0, height: 8.0)))
-                Button(action: {
-                    if trigger == nil {
-                        trigger = true
-                    } else {
-                        trigger?.toggle()
-                    }
-                }) {
-                    if isLoading {
-                        ProgressView()
-                    } else {
-                        Text(response?.isEmpty == false ? "Re-Generate" : "Generate")
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-            }
-            .padding()
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        withAnimation {
-                            save()
-                            dismiss()
-                        }
-                    }
-                    // Require a category to save changes.
-                    .disabled($response.wrappedValue == nil)
-                }
-                
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", role: .cancel) {
-                        dismiss()
-                    }
-                }
-            }
-            .task(id: trigger) {
-                guard trigger != nil else { return }
-                isLoading = true
-                do {
-                    response = try await gemini.execute(prompt: prompt, images: [])
-                } catch let error {
-                    isPresentingAlert = true
-                    errorAlertText = error.localizedDescription
-                }
-                isLoading = false
-            }
-            .onAppear {
-                print(item)
-                if let item {
-                    prompt = item.promptText
-                    response = item.responseText
-                }
-            }
-            .alert("Error", isPresented: $isPresentingAlert) {
-                Button("OK") {
-                    errorAlertText = nil
-                }
-            }
-        }
-    }
-    
-    private func save() {
         if let item {
-            item.promptText = prompt
-            item.responseText = response
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16.0) {
+                    Text(item.promptText)
+                        .foregroundStyle(.primary)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                    Text(item.responseText ?? "No response")
+                        .foregroundStyle(item.responseText?.isEmpty == false ? .primary : .tertiary)
+                        .frame(maxWidth: .infinity)
+                }
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity)
+                .padding()
+            }
+            .toolbar {
+                Button { isEditing = true } label: {
+                    Label("Edit", systemImage: "pencil")
+                }
+            }
+            .sheet(isPresented: $isEditing) {
+                PromptEditorView(item: item)
+            }
         } else {
-            let newItem = Item(timestamp: Date.now, promptText: prompt, promptImages: [])
-            modelContext.insert(newItem)
+            ContentUnavailableView("Invalid Data", systemImage: "pawprint")
         }
     }
 }
 
 #Preview {
-    PromptView(item: nil)
+    PromptView()
 }

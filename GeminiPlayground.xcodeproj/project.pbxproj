@@ -17,8 +17,9 @@
 		2C41D5292B2AAA6F00B2C3B8 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C41D5282B2AAA6F00B2C3B8 /* GoogleGenerativeAI */; };
 		2C41D52B2B2AB65F00B2C3B8 /* PromptImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41D52A2B2AB65F00B2C3B8 /* PromptImage.swift */; };
 		2C41D52D2B2AB7D900B2C3B8 /* Gemini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41D52C2B2AB7D900B2C3B8 /* Gemini.swift */; };
-		2C41D52F2B2AC24C00B2C3B8 /* PromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41D52E2B2AC24C00B2C3B8 /* PromptView.swift */; };
+		2C41D52F2B2AC24C00B2C3B8 /* PromptEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41D52E2B2AC24C00B2C3B8 /* PromptEditorView.swift */; };
 		2C41D5342B2AC8B900B2C3B8 /* NavigationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41D5332B2AC8B900B2C3B8 /* NavigationContext.swift */; };
+		2C41D5362B2ADA1600B2C3B8 /* PromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41D5352B2ADA1600B2C3B8 /* PromptView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +33,9 @@
 		2C41D5252B2AA5A700B2C3B8 /* GeminiAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiAPIKey.swift; sourceTree = "<group>"; };
 		2C41D52A2B2AB65F00B2C3B8 /* PromptImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptImage.swift; sourceTree = "<group>"; };
 		2C41D52C2B2AB7D900B2C3B8 /* Gemini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gemini.swift; sourceTree = "<group>"; };
-		2C41D52E2B2AC24C00B2C3B8 /* PromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptView.swift; sourceTree = "<group>"; };
+		2C41D52E2B2AC24C00B2C3B8 /* PromptEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptEditorView.swift; sourceTree = "<group>"; };
 		2C41D5332B2AC8B900B2C3B8 /* NavigationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationContext.swift; sourceTree = "<group>"; };
+		2C41D5352B2ADA1600B2C3B8 /* PromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				2C41D5152B2AA46900B2C3B8 /* ContentView.swift */,
-				2C41D52E2B2AC24C00B2C3B8 /* PromptView.swift */,
+				2C41D5352B2ADA1600B2C3B8 /* PromptView.swift */,
+				2C41D52E2B2AC24C00B2C3B8 /* PromptEditorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,10 +194,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C41D52F2B2AC24C00B2C3B8 /* PromptView.swift in Sources */,
+				2C41D52F2B2AC24C00B2C3B8 /* PromptEditorView.swift in Sources */,
 				2C41D52D2B2AB7D900B2C3B8 /* Gemini.swift in Sources */,
 				2C41D5162B2AA46900B2C3B8 /* ContentView.swift in Sources */,
 				2C41D5262B2AA5A700B2C3B8 /* GeminiAPIKey.swift in Sources */,
+				2C41D5362B2ADA1600B2C3B8 /* PromptView.swift in Sources */,
 				2C41D52B2B2AB65F00B2C3B8 /* PromptImage.swift in Sources */,
 				2C41D5182B2AA46900B2C3B8 /* Item.swift in Sources */,
 				2C41D5142B2AA46900B2C3B8 /* GeminiPlaygroundApp.swift in Sources */,

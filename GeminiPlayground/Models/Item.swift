@@ -15,9 +15,10 @@ final class Item {
     var promptImages: [Data]
     var responseText: String?
     
-    init(timestamp: Date, promptText: String, promptImages: [Data]) {
+    init(timestamp: Date, promptText: String, promptImages: [Data], responseText: String? = nil) {
         self.timestamp = timestamp
         self.promptText = promptText
         self.promptImages = promptImages
+        self.responseText = responseText
     }
 }

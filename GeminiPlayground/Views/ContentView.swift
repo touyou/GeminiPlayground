@@ -9,47 +9,62 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
     @State private var navigationContext = NavigationContext()
-    @State private var isEditorPresented = false
-    @Query private var items: [Item]
 
     var body: some View {
         NavigationSplitView {
-            List(selection: $navigationContext.selectedItem) {
-                ForEach(items) { item in
-                    NavigationLink(value: item) {
-                        HStack {
-                            Text(item.promptText)
-                            Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                        }
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .overlay {
-                if items.isEmpty {
-                    ContentUnavailableView("No prompts", systemImage: "pawprint")
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            .sheet(isPresented: $isEditorPresented) {
-                PromptView(item: nil)
-            }
+            PromptList()
         } detail: {
-            PromptView(item: navigationContext.selectedItem)
+            NavigationStack {
+                PromptView(item: navigationContext.selectedItem)
+            }
+        }
+        .environment(navigationContext)
+    }
+}
+
+private struct PromptList: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(NavigationContext.self) private var navigationContext
+    
+    @State private var isEditorPresented = false
+    
+    @Query private var items: [Item]
+
+    
+    var body: some View {
+        @Bindable var navigationContext = navigationContext
+        List(selection: $navigationContext.selectedItem) {
+            ForEach(items) { item in
+                NavigationLink(value: item) {
+                    HStack {
+                        Text(item.promptText)
+                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                    }
+                }
+            }
+            .onDelete(perform: deleteItems)
+        }
+        .overlay {
+            if items.isEmpty {
+                ContentUnavailableView("No prompts", systemImage: "pawprint")
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
+            }
+            ToolbarItem {
+                Button(action: addItem) {
+                    Label("Add Item", systemImage: "plus")
+                }
+            }
+        }
+        .sheet(isPresented: $isEditorPresented) {
+            PromptEditorView(item: nil)
         }
     }
-
+    
     private func addItem() {
         isEditorPresented = true
     }
