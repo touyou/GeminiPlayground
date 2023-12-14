@@ -39,7 +39,10 @@ private struct PromptList: View {
                 NavigationLink(value: item) {
                     HStack {
                         Text(item.promptText)
+                        Spacer()
                         Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                            .foregroundStyle(.tertiary)
+                            .font(.caption)
                     }
                 }
             }

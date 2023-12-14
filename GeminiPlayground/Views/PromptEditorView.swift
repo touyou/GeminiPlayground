@@ -39,6 +39,7 @@ struct PromptEditorView: View {
                 }) {
                     if isLoading {
                         ProgressView()
+                            .tint(.white)
                     } else {
                         Text(response?.isEmpty == false ? "Re-Generate" : "Generate")
                     }

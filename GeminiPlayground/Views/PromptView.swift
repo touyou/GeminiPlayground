@@ -30,7 +30,7 @@ struct PromptView: View {
             }
             .toolbar {
                 Button { isEditing = true } label: {
-                    Label("Edit", systemImage: "pencil")
+                    Text("Edit")
                 }
             }
             .sheet(isPresented: $isEditing) {
