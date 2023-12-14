@@ -20,6 +20,9 @@ struct PromptView: View {
                         .foregroundStyle(.primary)
                         .bold()
                         .frame(maxWidth: .infinity)
+                    if item.promptImages.isEmpty == false {
+                        ImageCarousel(promptImages: .constant(item.promptImages), isEditable: false)
+                    }
                     Text(item.responseText ?? "No response")
                         .foregroundStyle(item.responseText?.isEmpty == false ? .primary : .tertiary)
                         .frame(maxWidth: .infinity)

@@ -27,6 +27,8 @@ final class Gemini {
         let modelName = hasImage ? "gemini-pro-vision" : "gemini-pro"
         let model = GenerativeModel(name: modelName, apiKey: GeminiAPIKey.default)
         let response = try await model.generateContent(parts)
+        print(response.candidates)
+        print("FB: ", response.promptFeedback ?? "none")
         return response.text
     }
 }
