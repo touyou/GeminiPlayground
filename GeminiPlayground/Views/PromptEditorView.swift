@@ -117,6 +117,7 @@ struct PromptEditorView: View {
                 if let item {
                     prompt = item.promptText
                     response = item.responseText
+                    promptImages = item.promptImages
                 }
             }
             .alert("Error", isPresented: $isPresentingAlert) {
